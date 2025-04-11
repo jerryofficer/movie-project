@@ -80,15 +80,14 @@ const userSchema = new mongoose.Schema({
 
 const Users = mongoose.model("userdata", userSchema, "userdata")
 
-//Signup
+//Signup     
 app.post("/signup", async (req, res) => {
     const { name, email, password } = req.body;
     const existinguser = await Users.findOne({ email });
     if (existinguser) {
         return res.json(400).json({ message: "user already exist" });
-
     }
-    const hashpassword = await bcrypt.hash(password, 10);
+    const hashpassword = await bcrypt.hash(password, 10); 
     const user = new Users({ name, email, password: hashpassword });
     await user.save();
     res.json({ message: "user registerd successfully" });
@@ -144,7 +143,7 @@ app.put("/users/:id", async (req, res) => {
         const { name, email } = req.body;
         const updatedUser = await Users.findByIdAndUpdate(
             req.params.id,
-            { name, email },
+            { name, email },     
             { new: true, runValidators: true }
         );
 
